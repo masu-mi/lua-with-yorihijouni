@@ -125,7 +125,7 @@ void luaV_gettable (lua_State *L, const TValue *t, TValue *key, StkId val) {
       callTMres(L, val, tm, t, key);
       return;
     }
-    t = tm;  /* else repeat with `tm' */ 
+    t = tm;  /* else repeat with `tm' */
   }
   luaG_runerror(L, "loop in gettable");
 }
@@ -497,10 +497,11 @@ void luaV_execute (lua_State *L, int nexeccalls) {
       }
       case OP_LS: {
         const TValue *rb = RB(i);
-        if (ttype(rb) == LUA_TTABLE) {
+        const TValue *rc = RC(i);
+        if (ttype(rb) == LUA_TTABLE && ttype(rc) == LUA_TTABLE) {
             printf("is LUA_TTABLE\n");
             Protect(
-              if (!call_binTM(L, rb, luaO_nilobject, ra, TM_LS))
+              if (!call_binTM(L, rb, rc, ra, TM_LS))
                 luaG_typeerror(L, rb, "operated with <<");
             )
         }
@@ -508,9 +509,10 @@ void luaV_execute (lua_State *L, int nexeccalls) {
       }
       case OP_RS: {
         const TValue *rb = RB(i);
-        if (ttype(rb) == LUA_TTABLE) {
+        const TValue *rc = RC(i);
+        if (ttype(rb) == LUA_TTABLE && ttype(rc) == LUA_TTABLE) {
             Protect(
-              if (!call_binTM(L, rb, luaO_nilobject, ra, TM_RS))
+              if (!call_binTM(L, rb, rc, ra, TM_RS))
                 luaG_typeerror(L, rb, "operated with >>");
             )
         }
