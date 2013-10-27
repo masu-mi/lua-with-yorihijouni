@@ -33,6 +33,8 @@ typedef enum {
   TM_LE,
   TM_CONCAT,
   TM_CALL,
+  TM_LS,
+  TM_RS,
   TM_N		/* number of elements in the enum */
 } TMS;
 

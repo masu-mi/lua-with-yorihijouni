@@ -722,7 +722,7 @@ void luaK_infix (FuncState *fs, BinOpr op, expdesc *v) {
       break;
     }
     case OPR_ADD: case OPR_SUB: case OPR_MUL: case OPR_DIV:
-    case OPR_MOD: case OPR_POW: case OPR_LS: case OPR_RS: {
+    case OPR_MOD: case OPR_POW: {
       if (!isnumeral(v)) luaK_exp2RK(fs, v);
       break;
     }
