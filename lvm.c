@@ -495,6 +495,27 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         arith_op(luai_numpow, TM_POW);
         continue;
       }
+      case OP_LS: {
+        const TValue *rb = RB(i);
+        if (ttype(rb) == LUA_TTABLE) {
+            printf("is LUA_TTABLE\n");
+            Protect(
+              if (!call_binTM(L, rb, luaO_nilobject, ra, TM_LS))
+                luaG_typeerror(L, rb, "operated with <<");
+            )
+        }
+        continue;
+      }
+      case OP_RS: {
+        const TValue *rb = RB(i);
+        if (ttype(rb) == LUA_TTABLE) {
+            Protect(
+              if (!call_binTM(L, rb, luaO_nilobject, ra, TM_RS))
+                luaG_typeerror(L, rb, "operated with >>");
+            )
+        }
+        continue;
+      }
       case OP_UNM: {
         TValue *rb = RB(i);
         if (ttisnumber(rb)) {
