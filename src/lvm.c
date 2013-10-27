@@ -499,7 +499,6 @@ void luaV_execute (lua_State *L, int nexeccalls) {
         const TValue *rb = RB(i);
         const TValue *rc = RC(i);
         if (ttype(rb) == LUA_TTABLE && ttype(rc) == LUA_TTABLE) {
-            printf("is LUA_TTABLE\n");
             Protect(
               if (!call_binTM(L, rb, rc, ra, TM_LS))
                 luaG_typeerror(L, rb, "operated with <<");
